@@ -9,6 +9,8 @@ Author: Raphaël MANSUY
 thoughtdense analyzes text and generates a concise summary using Chain Of Density technique as described in the paper [From Sparse to Dense:
 GPT-4 Summarization with Chain of Density Prompting](https://arxiv.org/abs/2309.04269).
 
+Feel free to improve the code, fix issues and send pull requests. I'm also open to suggestions and feedback. You can reach me on Twitter [@raphaelmansuy](https://twitter.com/raphaelmansuy) or on LinkedIn [raphaelmansuy](https://www.linkedin.com/in/raphaelmansuy/).
+
 ![thoughtdense](./assets/illustration.png)
 
 ## cod-summarizer
@@ -121,7 +123,6 @@ graph TD
   F --> G[Appends the summary to the summaries list]
   G --> H[Returns the list of summaries after all steps are completed]
 ```
- 
 
 ## Architecture diagram
 
