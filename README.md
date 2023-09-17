@@ -77,3 +77,62 @@ python thoughtdense.py summarize --steps 3 --debug True ./demo/demo.txt
 
 - Python 3.8 or higher
 - OpenAI API key (set as environment variable OPENAI_API_KEY)
+
+## Structure of the repository
+
+- `thoughtdense.py` - CLI command for summarizing a document using the CoD prompt.
+- `cod_summarizer.py` - Python module for generating multi-step summaries of documents using the Chain Of Density
+- `demo` - Demo files
+
+## How it works
+
+The program defines several constants at the top that provide guidelines for the AI assistant on how to generate summaries in each step.
+
+VERBOSITY_GUIDELINES provides instructions to make the first summary very verbose and non-specific.
+
+FUSION_INSTRUCTIONS tells the AI to improve flow and make space for more entities in later steps.
+
+ENTITY_CONSTRAINTS defines what makes a good "Missing Entity" to add in each step.
+
+RESULT_FORMAT shows the expected JSON output containing the summary text and missing entities.
+
+The gen_prompt() function constructs the prompt to send to the AI by formatting the input document and previous summary along with the guideline constants.
+
+The cod_summarize() function is the main entry point. It:
+
+- Validates the input parameters
+- Initializes a list to store summaries
+- Loops through the number of steps specified
+- Calls gen_prompt() to construct the prompt
+- Calls the OpenAI API (ChatCompletion) with the prompt and parameters
+- Parses the response to extract the summary text
+- Appends the summary to the summaries list
+- Returns the list of summaries after all steps are completed
+
+ So in summary, it generates an initial verbose summary, then iteratively constructs prompts asking the AI to summarize again while adding specific missing entities in each step. The result is multiple increasingly condensed summaries focusing on key details.
+
+```mermaid
+graph TD
+  A[Validates the input parameters] --> B[Initializes a list to store summaries]
+  B --> C[Loops through the number of steps specified]
+  C --> D[Calls gen_prompt to construct the prompt]
+  D --> E[Calls the OpenAI API ChatCompletion with the prompt and parameters]
+  E --> F[Parses the response to extract the summary text]
+  F --> G[Appends the summary to the summaries list]
+  G --> H[Returns the list of summaries after all steps are completed]
+```
+ 
+
+## Architecture diagram
+
+```mermaid
+graph LR
+A[thoughtdense.py] -- calls --> B[cod_summarizer.py]
+B -- calls --> C[gen_prompt.py]
+```
+
+## To Do
+
+- [ ] Add tests
+- [ ] Add support to use other models than GPT-X
+- [ ] Better prompt engineering
